@@ -7,12 +7,12 @@ const epoch = new Date().valueOf()
 const server = http.createServer(async (req, res) => {
   if (req.url === "/" && req.method === "GET") {
     res.writeHead(200, { "Content-Type": "application/json" })
-    return res.end(`Hello World @ ${date}`)
+    return res.end(`Hello World v2 @ ${date}`)
   }
 
   if (req.url === "/health" && req.method === "GET") {
     res.writeHead(200, { "Content-Type": "application/json" })
-    return res.end(`Health check @ ${epoch}`)
+    return res.end(`Health check v2 @ ${epoch}`)
   } else {
     res.writeHead(404, { "Content-Type": "application/json" })
     return res.end(JSON.stringify({ message: "Route not found" }))
