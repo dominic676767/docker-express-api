@@ -1,13 +1,24 @@
-const express = require('express')
-const app = express()
+const http = require("http")
 const PORT = 8080
-const HOST = '0.0.0.0';
+const HOSTNAME = "0.0.0.0"
 const date = new Date().toTimeString()
+const epoch = new Date().valueOf()
 
-app.get('/', (req, res) => {
-  res.send(`Hello World @ ${date}`)
+const server = http.createServer(async (req, res) => {
+  if (req.url === "/" && req.method === "GET") {
+    res.writeHead(200, { "Content-Type": "application/json" })
+    return res.end(`Hello World @ ${date}`)
+  }
+
+  if (req.url === "/health" && req.method === "GET") {
+    res.writeHead(200, { "Content-Type": "application/json" })
+    return res.end(`Health check @ ${epoch}`)
+  } else {
+    res.writeHead(404, { "Content-Type": "application/json" })
+    return res.end(JSON.stringify({ message: "Route not found" }))
+  }
 })
 
-app.listen(PORT, () => {
-  console.log(`Listening at http://${HOST}:${PORT}`)
+server.listen(PORT, HOSTNAME, () => {
+  console.log(`Server running at http://${HOSTNAME}:${PORT}/`)
 })
